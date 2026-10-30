@@ -1,0 +1,1 @@
+web: MCP_TRANSPORT=streamable-http python -m github_mcp.server

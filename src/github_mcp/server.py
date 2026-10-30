@@ -235,4 +235,13 @@ async def list_pull_requests(
 
 
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    transport = os.getenv("MCP_TRANSPORT", "stdio")
+
+    if transport == "streamable-http":
+        mcp.run(
+            transport="streamable-http",
+            host="0.0.0.0",
+            port=int(os.getenv("PORT", "8000")),
+        )
+    else:
+        mcp.run(transport="stdio")
