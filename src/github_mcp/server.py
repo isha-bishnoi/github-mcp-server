@@ -70,12 +70,23 @@ def get_github_headers() -> dict:
 
 def format_http_error(exc: httpx.HTTPStatusError) -> str:
     """Convert GitHub HTTP errors into readable messages."""
-    status = exc.response.status_code
+    response = exc.response
+    status = response.status_code
 
-    if status == 403:
-        return "GitHub access forbidden or API rate limit exceeded."
+    try:
+        github_message = response.json().get("message", "Unknown error")
+    except ValueError:
+        github_message = response.text
 
-    return f"GitHub API returned HTTP {status}."
+    remaining = response.headers.get("X-RateLimit-Remaining", "unknown")
+    resource = response.headers.get("X-RateLimit-Resource", "unknown")
+
+    return (
+        f"GitHub API returned HTTP {status}. "
+        f"Message: {github_message}. "
+        f"Rate limit remaining: {remaining}. "
+        f"Resource: {resource}."
+    )
 
 
 def format_request_error(exc: httpx.RequestError) -> str:
