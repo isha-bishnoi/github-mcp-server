@@ -1,0 +1,252 @@
+[
+  {
+    "id": 1,
+    "query": "Show me details about the octocat/Hello-World repository.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 2,
+    "query": "List all repositories owned by octocat.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 3,
+    "query": "Find open issues in octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 4,
+    "query": "Show open pull requests in octocat/Hello-World.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 5,
+    "query": "What is the default branch of octocat/Hello-World?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 6,
+    "query": "How many stars does octocat/Hello-World have?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 7,
+    "query": "Show repositories belonging to octocat, sorted by recent updates.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 8,
+    "query": "Find closed issues in octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 9,
+    "query": "List all pull requests, including closed ones, for octocat/Hello-World.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 10,
+    "query": "Give me the description and GitHub URL for octocat/Hello-World.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 11,
+    "query": "Tell me the repository's current default branch and star count.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 12,
+    "query": "What projects has octocat published on GitHub?",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 13,
+    "query": "Show every issue, whether open or closed, in octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 14,
+    "query": "Are there any closed pull requests in octocat/Hello-World?",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 15,
+    "query": "Give me the GitHub page for the octocat/Hello-World project.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 16,
+    "query": "Find all repositories under the octocat account.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 17,
+    "query": "Show recently created issues in octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 18,
+    "query": "List the pull requests that are currently open for octocat/Hello-World.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 19,
+    "query": "How many open issues does octocat/Hello-World have according to its repository details?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 20,
+    "query": "Show me the repositories owned by octocat, including their descriptions.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 21,
+    "query": "Give me an overview of the octocat/Hello-World repository.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 22,
+    "query": "Which repositories has octocat updated recently?",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 23,
+    "query": "Find unresolved issues in octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 24,
+    "query": "Show me all merged or closed pull requests for octocat/Hello-World.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 25,
+    "query": "What is the URL and description of this GitHub project: octocat/Hello-World?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 26,
+    "query": "Display the projects in octocat's GitHub account.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 27,
+    "query": "List the issues that have been closed in octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 28,
+    "query": "How many pull requests are open in octocat/Hello-World? Show the pull request entries.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 29,
+    "query": "Tell me the number of stars and open issues for octocat/Hello-World.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 30,
+    "query": "List octocat's repositories with their names and descriptions.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 31,
+    "query": "Can you summarize the octocat/Hello-World repository?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 32,
+    "query": "What repositories are available in octocat's GitHub profile?",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 33,
+    "query": "Are there any active issues in octocat/Hello-World?",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 34,
+    "query": "Fetch the open pull request details for octocat/Hello-World.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 35,
+    "query": "What branch is used as the main branch in octocat/Hello-World?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 36,
+    "query": "Show me all the repositories that belong to this GitHub user: octocat.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 37,
+    "query": "I want to see the full list of issues in octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 38,
+    "query": "Find all pull requests, regardless of their state, in octocat/Hello-World.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 39,
+    "query": "How popular is octocat/Hello-World? Show me its star count.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 40,
+    "query": "Show the names and GitHub links of octocat's repositories.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 41,
+    "query": "I need the basic information about octocat/Hello-World.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 42,
+    "query": "Can you find all the projects created under octocat?",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 43,
+    "query": "Show me the currently open bugs or issues in octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 44,
+    "query": "What changes are being proposed through pull requests in octocat/Hello-World?",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 45,
+    "query": "Tell me the description, default branch, and stars of octocat/Hello-World.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 46,
+    "query": "I want to explore all repositories owned by octocat.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 47,
+    "query": "Get the issue titles and links for octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 48,
+    "query": "Show me both open and closed pull requests for octocat/Hello-World.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 49,
+    "query": "How many stars and open issues are reported for this repository?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 50,
+    "query": "List octocat's GitHub projects and their details.",
+    "expected_tool": "list_repositories"
+  }
+]

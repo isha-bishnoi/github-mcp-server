@@ -1,0 +1,103 @@
+
+[
+  {
+    "id": 51,
+    "query": "Fetch the metadata for microsoft/vscode.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 52,
+    "query": "Who maintains the repositories under torvalds?",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 53,
+    "query": "Find recently opened bugs in octocat/Hello-World.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 54,
+    "query": "Show me the closed pull requests in microsoft/vscode.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 55,
+    "query": "What is the primary development branch of torvalds/linux?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 56,
+    "query": "Display every project in the facebook GitHub account.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 57,
+    "query": "Find unresolved issues in python/cpython.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 58,
+    "query": "List merged pull requests for microsoft/vscode.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 59,
+    "query": "How many stars has torvalds/linux received?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 60,
+    "query": "Browse the GitHub projects owned by google.",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 61,
+    "query": "Give me the issue titles from django/django.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 62,
+    "query": "Retrieve the PR details for facebook/react.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 63,
+    "query": "What is the repository description of python/cpython?",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 64,
+    "query": "Which projects has vercel published?",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 65,
+    "query": "Show all bugs reported against kubernetes/kubernetes.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 66,
+    "query": "Find open contributions submitted as pull requests to nodejs/node.",
+    "expected_tool": "list_pull_requests"
+  },
+  {
+    "id": 67,
+    "query": "Give me the GitHub link and default branch for golang/go.",
+    "expected_tool": "get_repository"
+  },
+  {
+    "id": 68,
+    "query": "What repositories are maintained by the rust-lang organization?",
+    "expected_tool": "list_repositories"
+  },
+  {
+    "id": 69,
+    "query": "Get the latest issue reports for rust-lang/rust.",
+    "expected_tool": "list_issues"
+  },
+  {
+    "id": 70,
+    "query": "Show the pull request history for golang/go.",
+    "expected_tool": "list_pull_requests"
+  }
+]
