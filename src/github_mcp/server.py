@@ -1,7 +1,10 @@
 
 import asyncio
 import os
+import hmac
 
+import uvicorn
+from starlette.responses import JSONResponse
 import httpx
 from dotenv import load_dotenv
 from mcp.server.mcpserver import MCPServer
@@ -10,6 +13,35 @@ load_dotenv()
 
 mcp = MCPServer("GitHub Read-Only MCP Server")
 
+class MCPAuthMiddleware:
+    """Protect the MCP HTTP endpoint using bearer-token authentication."""
+
+    def __init__(self, app, expected_token: str):
+        self.app = app
+        self.expected_token = expected_token
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http" and scope["path"] == "/mcp":
+            headers = dict(scope.get("headers", []))
+            authorization = headers.get(b"authorization", b"").decode("latin-1")
+
+            parts = authorization.split(" ", 1)
+
+            valid_token = (
+                len(parts) == 2
+                and parts[0].lower() == "bearer"
+                and hmac.compare_digest(parts[1], self.expected_token)
+            )
+
+            if not valid_token:
+                response = JSONResponse(
+                    {"error": "Unauthorized. A valid bearer token is required."},
+                    status_code=401,
+                )
+                await response(scope, receive, send)
+                return
+
+        await self.app(scope, receive, send)
 
 async def github_get(
     url: str,
@@ -249,8 +281,18 @@ if __name__ == "__main__":
     transport = os.getenv("MCP_TRANSPORT", "stdio")
 
     if transport == "streamable-http":
-        mcp.run(
-            transport="streamable-http",
+        access_token = os.getenv("MCP_ACCESS_TOKEN")
+
+        if not access_token:
+            raise RuntimeError(
+                "MCP_ACCESS_TOKEN must be configured for HTTP transport."
+            )
+
+        app = mcp.streamable_http_app(host="0.0.0.0")
+        app = MCPAuthMiddleware(app, access_token)
+
+        uvicorn.run(
+            app,
             host="0.0.0.0",
             port=int(os.getenv("PORT", "8000")),
         )

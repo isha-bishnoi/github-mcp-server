@@ -3,7 +3,87 @@ import httpx
 import pytest
 
 from github_mcp.server import get_repository
+from github_mcp.server import MCPAuthMiddleware
 
+@pytest.mark.anyio
+async def test_mcp_auth_missing_token():
+    async def mock_app(scope, receive, send):
+        pass
+
+    middleware = MCPAuthMiddleware(mock_app, "test-secret")
+
+    scope = {
+        "type": "http",
+        "path": "/mcp",
+        "headers": [],
+    }
+
+    messages = []
+
+    async def receive():
+        return {"type": "http.request", "body": b"", "more_body": False}
+
+    async def send(message):
+        messages.append(message)
+
+    await middleware(scope, receive, send)
+
+    assert messages[0]["status"] == 401
+
+@pytest.mark.anyio
+async def test_mcp_auth_invalid_token():
+    async def mock_app(scope, receive, send):
+        pass
+
+    middleware = MCPAuthMiddleware(mock_app, "correct-secret")
+
+    scope = {
+        "type": "http",
+        "path": "/mcp",
+        "headers": [
+            (b"authorization", b"Bearer wrong-secret"),
+        ],
+    }
+
+    messages = []
+
+    async def receive():
+        return {"type": "http.request", "body": b"", "more_body": False}
+
+    async def send(message):
+        messages.append(message)
+
+    await middleware(scope, receive, send)
+
+    assert messages[0]["status"] == 401
+
+@pytest.mark.anyio
+async def test_mcp_auth_valid_token():
+    app_called = False
+
+    async def mock_app(scope, receive, send):
+        nonlocal app_called
+        app_called = True
+
+    middleware = MCPAuthMiddleware(mock_app, "correct-secret")
+
+    scope = {
+        "type": "http",
+        "path": "/mcp",
+        "headers": [
+            (b"authorization", b"Bearer correct-secret"),
+        ],
+    }
+
+    async def receive():
+        return {"type": "http.request", "body": b"", "more_body": False}
+
+    async def send(message):
+        pass
+
+    await middleware(scope, receive, send)
+
+    assert app_called is True
 
 @pytest.mark.anyio
 async def test_get_repository_success(monkeypatch):
@@ -92,7 +172,14 @@ async def test_get_repository_stops_after_three_attempts(monkeypatch):
     result = await get_repository("octocat", "Hello-World")
 
     assert calls == 3
-    assert result == {"error": "GitHub API returned HTTP 500."}
+    assert result == {
+    "error": (
+        "GitHub API returned HTTP 500. "
+        "Message: . "
+        "Rate limit remaining: unknown. "
+        "Resource: unknown."
+    )
+}
 
 
 @pytest.mark.anyio
@@ -331,8 +418,13 @@ async def test_get_repository_forbidden(monkeypatch):
     result = await get_repository("octocat", "Hello-World")
 
     assert result == {
-        "error": "GitHub access forbidden or API rate limit exceeded."
-    }
+    "error": (
+        "GitHub API returned HTTP 403. "
+        "Message: . "
+        "Rate limit remaining: unknown. "
+        "Resource: unknown."
+    )
+}
 
 
 @pytest.mark.anyio
