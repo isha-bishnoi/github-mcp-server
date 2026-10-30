@@ -26,7 +26,7 @@ The project follows a simple layered architecture:
 ```text
 AI Application / MCP Client
           |
-          | MCP Protocol
+          | MCP Protocol (stdio / Streamable HTTP)
           v
      MCP Server
           |
@@ -41,13 +41,20 @@ AI Application / MCP Client
 
 ### How It Works
 
-1. An MCP client connects to the server using the MCP protocol over standard input/output (stdio).
-2. The client discovers the tools exposed by the server.
+The MCP server supports two transport mechanisms:
+
+- **stdio:** Used for local connections between an MCP client and the server.
+- **Streamable HTTP:** Used for remote connections over HTTP, protected by bearer-token authentication.
+
+The request flow works as follows:
+
+1. An MCP client connects to the server using either stdio or Streamable HTTP.
+2. The client discovers the tools exposed by the MCP server.
 3. When a user requests GitHub information, the client invokes the appropriate tool.
-4. The MCP server executes the tool and sends an HTTP request to the GitHub REST API.
+4. The MCP server executes the tool and sends an asynchronous HTTP GET request to the GitHub REST API using `httpx`.
 5. The server processes the API response and returns structured information to the MCP client.
 
-The server uses asynchronous HTTP requests through `httpx` and includes retry handling and error handling for API failures and network issues.
+The server includes retry handling and error handling for API failures, timeouts, and network issues.
 
 ## Technology Stack
 
@@ -80,15 +87,36 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
-### 4. Configure GitHub Authentication
+### 4. Configure Environment Variables
 
 Create a `.env` file in the project root:
 
 ```env
 GITHUB_TOKEN=your_github_token
+MCP_ACCESS_TOKEN=your_mcp_access_token
 ```
 
-A GitHub personal access token is recommended to provide authenticated API access and higher API rate limits.
+- `GITHUB_TOKEN` – Used to authenticate requests to the GitHub REST API and provide higher API rate limits.
+- `MCP_ACCESS_TOKEN` – Used to protect the MCP server's Streamable HTTP endpoint with bearer-token authentication.
+
+A GitHub personal access token is recommended. The MCP access token is required when running the server with Streamable HTTP transport.
+
+Never commit your actual `.env` file or expose either token publicly.
+
+## Remote Deployment
+
+The MCP server is deployed on Render and supports remote connections using Streamable HTTP transport.
+
+- **Platform:** Render
+- **Transport:** Streamable HTTP
+- **MCP Endpoint:** https://github-mcp-server-ide3.onrender.com/mcp
+
+The HTTP endpoint is protected using bearer-token authentication. Configure the following environment variables in the deployment environment:
+
+- `GITHUB_TOKEN` – GitHub personal access token for authenticated API requests.
+- `MCP_ACCESS_TOKEN` – Secret token used to authenticate clients connecting to the MCP server.
+
+The server requires a valid bearer token in the Authorization header when accessed over HTTP.
 
 ### 5. Run the MCP Server
 
@@ -120,7 +148,7 @@ Run only the evaluation tests:
 pytest tests/test_evaluation.py -v
 ```
 
-The current test suite contains **26 passing tests**.
+The current test suite contains **29 passing tests**.
 
 ## Evaluation Framework
 
@@ -166,7 +194,6 @@ Potential improvements for future versions include:
 - Integrating an LLM-based tool-selection mechanism instead of keyword-based classification.
 - Adding pagination support for repositories, issues, and pull requests.
 - Expanding the evaluation dataset with more diverse natural-language queries.
-- Deploying the MCP server remotely for access by multiple clients.
 - Adding more read-only GitHub tools, such as commit history and file contents.
 
 ## Project Scope
