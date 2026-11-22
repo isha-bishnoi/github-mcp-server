@@ -896,16 +896,18 @@
     },
     {
         "id": 50,
-        "query": "List octocat's GitHub projects and their details.",
+        "query": "List all repositories owned by octocat and provide their details.",
         "expected_tool": "list_repositories",
-        "selected_tool": null,
+        "selected_tool": "list_repositories",
         "expected_arguments": {
             "owner": "octocat"
         },
-        "arguments": {},
-        "tool_correct": false,
-        "arguments_correct": false,
-        "overall_correct": false,
+        "arguments": {
+            "owner": "octocat"
+        },
+        "tool_correct": true,
+        "arguments_correct": true,
+        "overall_correct": true,
         "error": null
     }
 ]

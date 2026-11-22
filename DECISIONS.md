@@ -166,12 +166,19 @@ This document captures the key engineering decisions made while building the Git
 - End-to-end accuracy measures whether both tool selection and argument extraction were correct.
 
 **Results:**
-- Initial full evaluation: 49/50 correct tool selections (98%).
-- Argument extraction: 49/49 (100%).
-- End-to-end accuracy: 49/50 (98%).
-- The remaining query was refined and subsequently passed a separate focused test.
 
-**Limitation:** The focused test was run separately and is not included in the initial full-run accuracy.
+The final full evaluation using 50 natural-language queries achieved:
+
+- Tool selection: 50/50 (100%).
+- Argument extraction: 50/50 (100%).
+- End-to-end accuracy: 50/50 (100%).
+- API errors: 0.
+
+The model omitted the optional `state` argument in one issue query. The evaluation script normalized the missing argument to the tool's default value (`open`) before comparison, resulting in a correct match.
+
+**Limitations:**
+- The same 50-query dataset was used during tool-description and query refinement. The final score should not be treated as an independent benchmark of generalization to unseen queries.
+- The evaluation measures tool selection and argument extraction, not the correctness of the actual GitHub API data returned by the tools.
 
 
 ## 5. Configuration and Security

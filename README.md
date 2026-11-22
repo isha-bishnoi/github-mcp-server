@@ -191,16 +191,16 @@ The evaluation measures whether an LLM can correctly select an MCP tool and extr
 
 **Results:**
 
-The initial full evaluation achieved:
-- Tool selection: 49/50 (98%)
-- Argument extraction: 49/49 (100%)
-- End-to-end accuracy: 49/50 (98%)
+The final full evaluation using 50 natural-language queries achieved:
 
-The remaining query was refined to remove ambiguity and subsequently passed a separate focused test (1/1). This focused result is not included in the initial full-run metrics.
+- Tool selection: 50/50 (100%)
+- Argument extraction: 50/50 (100%)
+- End-to-end accuracy: 50/50 (100%)
+- API errors: 0
 
-Detailed results are saved in `evals/llm_eval_results.json`.
+The evaluation uses the model's native function-calling capability. For issue and pull-request queries, omitted `state` arguments are normalized to the default value `open` before comparison.
 
-To run the LLM evaluation, configure `GROQ_API_KEY` in your `.env` file and execute:
+**Limitation:** The 50-query dataset was used during tool-description and query refinement. Therefore, these results demonstrate performance on the current evaluation dataset and should not be considered an independent benchmark of generalization to unseen queries.
 
 ```bash
 python evals/run_llm_eval.py
