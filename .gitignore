@@ -9,3 +9,4 @@ __pycache__/
 
 # Test cache
 .pytest_cache/
+evals/llm_eval_single_query_results.json

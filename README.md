@@ -171,27 +171,55 @@ The evaluation script reports:
 - Confusion matrix.
 - Incorrect predictions and failure cases.
 
-### Running the Evaluation
 
-Run the original evaluation dataset:
+### LLM-Based Tool-Calling Evaluation
+
+In addition to rule-based evaluation, the project includes an LLM-based evaluation framework using the Groq API.
+
+The evaluation measures whether an LLM can correctly select an MCP tool and extract the required arguments from natural-language queries.
+
+**Configuration:**
+- **Provider:** Groq
+- **Model:** `qwen/qwen3.8-27b`
+- **Dataset:** 50 natural-language queries
+- **Tool selection:** Uses the model's native function-calling capability.
+
+**Evaluation Metrics:**
+- Tool-selection accuracy: Whether the model selects the expected MCP tool.
+- Argument-extraction accuracy: Whether the selected tool receives the expected arguments.
+- End-to-end accuracy: Whether both the tool and its arguments are correct.
+
+**Results:**
+
+The initial full evaluation achieved:
+- Tool selection: 49/50 (98%)
+- Argument extraction: 49/49 (100%)
+- End-to-end accuracy: 49/50 (98%)
+
+The remaining query was refined to remove ambiguity and subsequently passed a separate focused test (1/1). This focused result is not included in the initial full-run metrics.
+
+Detailed results are saved in `evals/llm_eval_results.json`.
+
+To run the LLM evaluation, configure `GROQ_API_KEY` in your `.env` file and execute:
 
 ```bash
-python evals/run_eval.py
+python evals/run_llm_eval.py
 ```
 
-Run the additional query set:
+To evaluate a single query by ID:
 
 ```bash
-python evals/run_eval.py unseen_queries.json
+python evals/run_llm_eval.py 50
 ```
 
-**Note:** The classifier uses keyword-based rules rather than an LLM. The additional query set was also used during classifier refinement, so its results should be treated as development/validation results rather than an independent benchmark.
+The LLM evaluation requires an API key and is subject to the provider's usage limits.
+
 
 ## Future Improvements
 
 Potential improvements for future versions include:
 
-- Integrating an LLM-based tool-selection mechanism instead of keyword-based classification.
+- Exploring LLM-based tool selection in a client application that consumes the MCP server.
 - Adding pagination support for repositories, issues, and pull requests.
 - Expanding the evaluation dataset with more diverse natural-language queries.
 - Adding more read-only GitHub tools, such as commit history and file contents.

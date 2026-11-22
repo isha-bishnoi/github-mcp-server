@@ -131,7 +131,11 @@ def format_request_error(exc: httpx.RequestError) -> str:
 
 @mcp.tool()
 async def get_repository(owner: str, repo: str) -> dict:
-    """Get basic details about a public GitHub repository."""
+    """
+Retrieve information about a public GitHub repository.
+Use this tool whenever the user asks about a repository,
+including requesting its GitHub page or URL.
+"""
     url = f"https://api.github.com/repos/{owner}/{repo}"
     headers = get_github_headers()
 
